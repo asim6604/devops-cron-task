@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    triggers {
+        cron('H/5 * * * *')  // Trigger every 5 minutes
+    }
+
+    stages {
+        stage('Getting code from git') {
+            steps {
+                git 'https://github.com/asim6604/devops-cron-task.git'
+                echo "Getting code from git"
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t my-node-app .'
+            }
+        }
+    }
+}
