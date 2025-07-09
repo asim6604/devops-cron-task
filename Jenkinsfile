@@ -2,14 +2,15 @@ pipeline {
     agent any
 
     triggers {
-        cron('*/5 * * * *')  // Trigger every 5 minutes
+        cron('H/5 * * * *')
     }
 
     stages {
+
         stage('Getting code from git') {
             steps {
-                git 'https://github.com/asim6604/devops-cron-task.git'
-                echo "Getting code from git"
+                checkout scm
+                echo "✅ Code checked out using SCM"
             }
         }
 
@@ -18,5 +19,6 @@ pipeline {
                 sh 'docker build -t my-node-app .'
             }
         }
+
     }
 }
