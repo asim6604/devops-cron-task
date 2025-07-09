@@ -9,8 +9,7 @@ pipeline {
 
         stage('Getting code from git') {
             steps {
-                checkout scm
-                echo "✅ Code checked out using SCM"
+                git 'https://github.com/asim6604/devops-cron-task.git'
             }
         }
 
