@@ -1,4 +1,5 @@
 pipeline{
+
     agent any
     environment{
      docker_image='asim6604/my-node-app'
@@ -37,4 +38,7 @@ stages{
     }
 }
 }
+
+
+
 
