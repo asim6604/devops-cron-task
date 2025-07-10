@@ -1,7 +1,31 @@
 pipeline{
     agent any
+<<<<<<< HEAD
     environment{
      docker_image='asim6604/my-node-app'
+=======
+
+    triggers {
+        cron('H/5 * * * *')
+    }
+
+    stages {
+
+        stage('Getting code from git') {
+            steps {
+               git branch: 'main', url: 'https://github.com/asim6604/devops-cron-task.git'
+
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t my-node-app .'
+            }
+        }
+
+    }
+>>>>>>> 113100b3c828677832f00338034646fbf5c0d19c
 }
 }
 
