@@ -2,12 +2,12 @@ pipeline{
 
     agent any
     environment{
-     docker_image='asim6604/my-node-app'
-}
-stages{
+        docker_image = 'asim6604/my-node-app'
+    }
+    stages{
     stage('clone'){
        steps{
-        git branch:'main' , url: 'https://github.com/asim6604/devops-cron-task.git'
+        git branch: 'main' , url: 'https://github.com/asim6604/devops-cron-task.git'
     }
     }
     stage('build'){
@@ -38,6 +38,10 @@ stages{
     }
 }
 }
+}
+
+
+
 
 
 
