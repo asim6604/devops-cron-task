@@ -1,22 +1,40 @@
-pipeline {
+pipeline{
     agent any
+    environment{
+     docker_image='asim6604/my-node-app'
+}
+}
 
-    triggers {
-        cron('*/5 * * * *')  // Trigger every 5 minutes
+stages{
+    stage('clone'){
+       steps{
+        git 'https://github.com/asim6604/devops-cron-task.git'
     }
-
-    stages {
-        stage('Getting code from git') {
-            steps {
-                git 'https://github.com/asim6604/devops-cron-task.git'
-                echo "Getting code from git"
-            }
+    }
+    stage('build'){
+        steps{
+            sh 'docker build -t $docker_image .'
         }
+    }
+    stage('push to the docker hub'){
+        steps{
+            withCredentials([
+                usernamePassword(
+                    credentialsId:'dockerhub-credentials'
+                    usernameVariable:'DOCKER_USER'
+                    passwordVariable:'DOCKER_PASS'
 
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t my-node-app .'
-            }
+                )
+            ])
+            sh '''
+            echo "$DOCKER_PASS"|  docker login -u "$DOCKER_USER" --password-stdin
+            docker push $docker_image
+            '''
+        }
+    }
+    stage('clean up'){
+        step{
+            sh 'docker system prune -f'
         }
     }
 }
