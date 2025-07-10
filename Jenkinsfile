@@ -8,7 +8,7 @@ pipeline{
 stages{
     stage('clone'){
        steps{
-        git 'https://github.com/asim6604/devops-cron-task.git'
+        git branch:main , url: 'https://github.com/asim6604/devops-cron-task.git'
     }
     }
     stage('build'){
